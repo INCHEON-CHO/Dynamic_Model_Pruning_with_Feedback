@@ -28,18 +28,19 @@ parser.add_argument('--data', default='cifar10', type=str, help='cifar10, cifar1
 parser.add_argument('--cutout', default=False, type=bool, help='using regularization with cutout')
 parser.add_argument('--model', default='resnet18', type=str, help='resnet9/18/34/50, resnet20/32/44/56/110/1202, wrn_40_2/_16_2/_40_1')
 parser.add_argument('--datapath', default='/dataset/CIFAR', type=str)
-parser.add_argument('--expname', default="resnetT1", type=str, help='checkpoint name')
+parser.add_argument('--expname', default="resnetT2", type=str, help='checkpoint name')
 parser.add_argument('--GPU', default='0,1', type=str,help='GPU to use')
 
 ### training specific args
 parser.add_argument('--epochs', default=300, type=int)
 parser.add_argument('--batch_size', default=128, type=int)
 parser.add_argument('--lr', default=0.2)
-parser.add_argument('--nesterov', default=True, type=bool)
+parser.add_argument('--nesterov', dest='nesterov', default=False, action='store_true', help='use neterov momentum')
 parser.add_argument('--lr_decay', default=0.1, type=float, help='learning rate decay')
-parser.add_argument('--weight_decay', default=1e-4, type=float)
-parser.add_argument('--target_sparsity', default=0.5, type=float)
-parser.add_argument('--frequency', default=1, type=int, help='update mask per epoch')
+parser.add_argument('--weight-decay', default=1e-4, type=float)
+parser.add_argument('--do-DPF', dest='do_DPF', default=False, action='store_true', help='use DPF')
+parser.add_argument('--target-sparsity', default=0.5, type=float)
+parser.add_argument('--frequency', default=1, type=int, help='pruning frequency')
 
 args = parser.parse_args()
 
@@ -84,8 +85,8 @@ for epoch in range(args.epochs):
     adjust_learning_rate(optimizer, epoch, args.lr, args.lr_decay)
     print("Epoch : {}, lr : {}".format(epoch, optimizer.param_groups[0]['lr']))
     print('===> [ Training ]')
-    
-    if (epoch+1)%args.frequency == 0:
+
+    if (epoch+1)%args.frequency == 0 and args.do_DPF:
         sparsity = args.target_sparsity - args.target_sparsity * (1 - (epoch+1)/args.epochs)**3
         model = sparsify(model, sparsity*100)
 
@@ -105,4 +106,4 @@ for epoch in range(args.epochs):
             'valid_acc': acc_list,
             'remain' : remain_percent
         }
-        torch.save(state, './checkpoint/'+args.expname+'.pth.tar')
+        save_checkpoint(state, args.expname)
