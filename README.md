@@ -4,15 +4,13 @@ Paper Link : [**Dynamic Pruning with Feedback**](https://openreview.net/pdf?id=S
 
 If you want to get information of hyperparameters, you should read appendix part of this paper
 
-#### Abstract
+## Abstract
 
 (1) Allowing dynamic allocation of the sparsity pattern
 
 (2) Incorporating feedback signal to reactivate prematurely pruned weights
 
-#### Method
-
-<hr/ - - ->
+## Method
 
 ![Alt text](./resource/method.jpg)
 
@@ -20,14 +18,14 @@ If you want to get information of hyperparameters, you should read appendix part
 
 
 
-#### Run
+## Run
 
-<hr/ - - ->
+<hr/>
 
 ```
 python train.py --data cifar10 --datapath DATAPATH --model resnet20 --expname DPFTest
 ```
 
-#### Summary
+## Summary
 
 Summary will be updated...
