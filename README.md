@@ -1,6 +1,6 @@
-# Dynamic Pruning with Feedback
+# Dynamic Model Pruning with Feedback
 
-Paper Link : [**Dynamic Pruning with Feedback**](https://openreview.net/pdf?id=SJem8lSFwB) - ICLR2020
+Paper Link : [**Dynamic Model Pruning with Feedback**](https://openreview.net/pdf?id=SJem8lSFwB) - ICLR2020
 
 If you want to get information of hyperparameters, you should read appendix part of this paper
 
@@ -19,8 +19,6 @@ If you want to get information of hyperparameters, you should read appendix part
 
 
 ## Run
-
-<hr/>
 
 ```
 python train.py --data cifar10 --datapath DATAPATH --model resnet20 --expname DPFTest
