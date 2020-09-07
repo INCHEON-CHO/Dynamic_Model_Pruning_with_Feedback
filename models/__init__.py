@@ -1,3 +1,2 @@
-from .blocks import *
-from .resnet import *
+from .resnet import resnet
 from .wideresnet import *
