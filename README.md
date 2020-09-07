@@ -23,24 +23,25 @@ If you want to get information of hyperparameters, you should read appendix part
 ## Run
 
 ```
-python train.py --data cifar10 --datapath DATAPATH --model resnet20 --expname DPFTest
+python main.py cifar10 --datapath DATAPATH --a resnet layers 56 -C -g 0 save train.pth \
+--epochs 300 --batch-size 128  --lr 0.2 --wd 1e-4 --nesterov --scheduler multistep --milestones 150 225 --gamma 0.1
 ```
 
 ## Experiment
 
-![title](./resource/acc.png) ![Alt text](./resource/sparsity.png)
-
 |         | Best Top-1 Acc | Sparsity(%) |
 | ------- | -------------- | ----------- |
-| Basline | 92.66          | 0           |
-| DPF     | **92.78**      | **45.75**   |
+| Basline | 93.97          | 0           |
+| DPF     | **93.73**      | **90.00**   |
 
 
 
-Experiment on ResNet20 for CIFAR10
+Experiment on ResNet56 for CIFAR10
 
 DPF run :
 
 ```
-python train.py --data cifar10 --datapath DATAPATH --model resnet20 --expname DPFTest --epochs 300 --batch_size 128 --lr 0.2 --nesterov --lr_decay 0.1 --weight_decay 1e-4 --do-DPF -- target_sparsity 0.5 --frequency 1
+python main.py cifar10 --datapath DATAPATH -a resnet --layers 56 -C -g 0 --save prune.pth \
+-P --prune-type unstructured --prune-freq 16 --prune-rate 0.9 --prune-imp L2 \
+--epochs 300 --batch-size 128  --lr 0.2 --wd 1e-4 --nesterov --scheduler multistep --milestones 150 225 --gamma 0.1
 ```
