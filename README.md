@@ -29,7 +29,7 @@ python main.py cifar10 --datapath DATAPATH --a resnet layers 56 -C -g 0 save tra
 
 ## Experiment
 
-|         | Best Top-1 Acc | Sparsity(%) |
+|         | Best Top-1 Acc(%) | Sparsity(%) |
 | ------- | -------------- | ----------- |
 | Basline | 93.97          | 0           |
 | DPF     | **93.73**      | **90.00**   |
