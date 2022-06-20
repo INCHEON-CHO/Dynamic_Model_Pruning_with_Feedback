@@ -302,13 +302,13 @@ def validate(args, val_loader, epoch, model, criterion):
                 target = target.cuda(non_blocking=True)
 
             # compute output
-            if args.ensemble:
-                output = [k(input) for k in model]
-                loss = torch.mean(torch.stack([criterion(k, target) for k in output]))
-                output = torch.stack([F.softmax(k, dim=1) for k in output]).mean(dim=0)
-            else:
-                output = model(input)
-                loss = criterion(output, target)
+            #if args.ensemble:
+            #    output = [k(input) for k in model]
+            #    loss = torch.mean(torch.stack([criterion(k, target) for k in output]))
+            #    output = torch.stack([F.softmax(k, dim=1) for k in output]).mean(dim=0)
+            #else:
+            output = model(input)
+            loss = criterion(output, target)
 
             # measure accuracy and record loss
             acc1, acc5 = accuracy(output, target, topk=(1, 5))
